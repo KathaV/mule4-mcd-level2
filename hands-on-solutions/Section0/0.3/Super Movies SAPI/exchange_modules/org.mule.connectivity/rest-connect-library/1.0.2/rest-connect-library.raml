@@ -1,0 +1,72 @@
+#%RAML 1.0 Library
+---
+usage: |
+    This library defines annotation types to provide connectivity using the REST Connect.
+
+annotationTypes:
+    ignored:
+        type: string?
+        description: |
+            This annotation allows to specify a method which will not be transformed into an operation.
+            Optionally, a reason can be defined.
+        allowedTargets: [ Method ]
+
+    operationName:
+        type: string
+        description: This annotation allows to specify a custom operation name.
+        allowedTargets: [ Method ]
+
+    parameterName:
+        type: string
+        description: This annotation allows to specify a custom parameter name.
+        allowedTargets: [ TypeDeclaration ]
+
+    userSelectedSecuritySchemes:
+        type: string?
+        description: |
+            When using this annotation Rest Connect will let the user select which security scheme to use in the operations.
+            It can be set globally at the root of the spec or on a method by method basis.
+            This annotation only affects mule 4 connectors as mule 3 ones have native support for this.
+            Optionally, a reason can be defined.
+        allowedTargets: [ API, Method ]
+
+    default:
+        type: string?
+        description: Use this annotation to select a default media type for an operation body (i.e application/json:).
+        allowedTargets: [ TypeDeclaration ]
+
+    partContentType:
+        type: string
+        description: Use this annotation to set a fixed content type for a part in a multipart request.
+        allowedTargets: [ TypeDeclaration ]
+
+    partName:
+        type: string
+        description: Use this annotation to set a fixed name for a part in a multipart request.
+        allowedTargets: [ TypeDeclaration ]
+
+    partFilename:
+        type: string
+        description: Use this annotation to set a fixed filename for a part in a multipart request.
+        allowedTargets: [ TypeDeclaration ]
+
+    partNameParameter:
+        type: string
+        description: Use this annotation to create a parameter for the name of a part in a multipart request.
+        allowedTargets: [ TypeDeclaration ]
+
+    partFilenameParameter:
+        type: string
+        description: Use this annotation to create a parameter for the filename of a part in a multipart request.
+        allowedTargets: [ TypeDeclaration ]
+
+    renewTokenExpression:
+        type: string
+        description: |
+         A dataweave expression used to check if the OAuth token should be renewed.
+         The expression must return a boolean value. The token will be renewed when the value is true.
+         This expression will replace the default behaviour of checking for 40x status codes.
+         Default expression:
+            #[attributes.statusCode == 400 or attributes.statusCode == 401 or attributes.statusCode == 402
+              or attributes.statusCode == 403 or attributes.statusCode == 406]
+        allowedTargets: [ SecurityScheme ]
